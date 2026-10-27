@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/vaifstudio/vaif-python/blob/main/SECURITY.md
+    about: Report vulnerabilities privately by email to security@vaif.studio, as SECURITY.md describes. Do not open a public issue.
+  - name: Account, billing and product support
+    url: https://vaif.studio/contact
+    about: Questions about your VAIF Studio account, billing or projects.

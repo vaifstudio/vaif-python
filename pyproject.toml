@@ -1,0 +1,133 @@
+[build-system]
+# hatchling 1.27 is the first release that reads `license-files` as a list of
+# globs (PEP 639) and writes License-Expression and License-File metadata.
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+# The distribution and the import package are both "vaifstudio". It replaces
+# "vaif-client" (import "vaif"), whose 0.x releases call routes the API does not
+# serve. The "vaif" distribution on PyPI is an older generated client, not this
+# package.
+name = "vaifstudio"
+version = "1.0.0"
+description = "Official async Python SDK for VAIF Studio: auth, database queries, storage, functions and realtime."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+# Supported: Python 3.10 through 3.14. The classifiers below and the CI matrix
+# list the same five versions.
+requires-python = ">=3.10"
+authors = [{ name = "VAIF Studio LLC", email = "support@vaif.studio" }]
+keywords = ["vaif", "vaifstudio", "vaif-studio", "backend", "database", "baas", "async", "httpx"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Framework :: AsyncIO",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Database",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
+# httpx 0.26 is the lowest release this package is tested with. certifi, idna,
+# anyio and h11 are httpx dependencies, declared here with minimum versions
+# because pip keeps an already-installed version that satisfies httpx:
+# - certifi 2026.10.19 removes the compromised emSign root certificates
+#   (GHSA-6q48-6c7w-9gw2); httpx verifies TLS against certifi's bundle.
+# - idna 3.15 fixes CVE-2026-45409.
+# - h11 0.16 fixes CVE-2025-43859 (chunked-body parsing). With it, the resolver
+#   installs httpcore 1.0.9 or later.
+# - anyio 4.14.2 fixes CVE-2026-63374 (TLS host-name encoding) and
+#   CVE-2026-64847. httpcore runs TLS through anyio under asyncio.
+# websockets 17 requires Python 3.11; on Python 3.10 the resolver installs 16.
+dependencies = [
+    "httpx>=0.26,<1",
+    "websockets>=15,<18",
+    "anyio>=4.14.2",
+    "h11>=0.16",
+    "certifi>=2026.10.19",
+    "idna>=3.15",
+]
+
+[project.optional-dependencies]
+# pytest 9.0.3 fixes CVE-2025-71176; pytest-asyncio 1.3 is the first release
+# that supports pytest 9.
+dev = [
+    "pytest>=9.0.3",
+    "pytest-asyncio>=1.3",
+    "respx>=0.21",
+    "mypy>=1.8",
+    "ruff>=0.4",
+    "build>=1.0",
+    "twine>=5.0",
+]
+
+[project.urls]
+Homepage = "https://vaif.studio"
+Source = "https://github.com/vaifstudio/vaif-python"
+Issues = "https://github.com/vaifstudio/vaif-python/issues"
+Changelog = "https://github.com/vaifstudio/vaif-python/blob/main/CHANGELOG.md"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/vaifstudio"]
+
+[tool.hatch.build.targets.sdist]
+include = ["/src", "/tests", "/README.md", "/CHANGELOG.md", "/LICENSE"]
+# test_conformance.py needs cases that are not part of this package.
+exclude = ["__pycache__", "/tests/test_conformance.py"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "B", "UP", "SIM"]
+ignore = ["UP006", "UP007", "UP035", "UP045"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501"]
+# Generated code: one table entry per route, with the route's summary on one
+# line.
+"src/vaifstudio/_generated/*" = ["E501"]
+
+[tool.ruff.format]
+# Same reason: `ruff format` would re-wrap generated code, which would then no
+# longer match the generator's output.
+exclude = ["src/vaifstudio/_generated/*"]
+
+[tool.mypy]
+# The package's floor: requires-python = ">=3.10".
+python_version = "3.10"
+strict = true
+files = [
+    "src/vaifstudio/__init__.py",
+    "src/vaifstudio/_generated/__init__.py",
+    "src/vaifstudio/_generated/client.py",
+    "src/vaifstudio/_generated/operations.py",
+    "src/vaifstudio/_http.py",
+    "src/vaifstudio/_operations.py",
+    "src/vaifstudio/_version.py",
+    "src/vaifstudio/auth.py",
+    "src/vaifstudio/copilot.py",
+    "src/vaifstudio/client.py",
+    "src/vaifstudio/database.py",
+    "src/vaifstudio/exceptions.py",
+    "src/vaifstudio/functions.py",
+    "src/vaifstudio/retry.py",
+    "src/vaifstudio/realtime.py",
+    "src/vaifstudio/storage.py",
+    "src/vaifstudio/types.py",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+markers = ["integration: needs a running VAIF API (VAIF_IT_* environment variables)"]

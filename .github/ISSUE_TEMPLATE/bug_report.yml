@@ -1,0 +1,44 @@
+name: Bug report
+description: Report a defect in the Python SDK.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not report security vulnerabilities here: email security@vaif.studio (see SECURITY.md).
+        Do not paste API keys, access tokens, passwords or customer data.
+  - type: input
+    id: sdk-version
+    attributes:
+      label: SDK version
+      description: 'Output of `python -c "import vaifstudio; print(vaifstudio.__version__)"`.'
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Python version and operating system
+      placeholder: Python 3.12.7 on Ubuntu 24.04
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened
+      description: What you expected to happen, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Code to reproduce
+      description: A minimal code sample that shows the problem.
+      render: python
+    validations:
+      required: true
+  - type: textarea
+    id: error
+    attributes:
+      label: Error output
+      description: The full exception. For a `VaifError`, include `status`, `code` and `request_id`.
+      render: text
