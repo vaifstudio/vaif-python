@@ -1,5 +1,5 @@
 # GENERATED FILE — do not edit by hand.
-# Source: the VAIF Studio API's OpenAPI description, sha256:615e77b7a0789543; 801 operations generated, 142 not generated (listed in UNGENERATED_OPERATIONS with the reason).
+# Source: the VAIF Studio API's OpenAPI description, sha256:615e77b7a0789543; 775 operations generated, 168 not generated (listed in UNGENERATED_OPERATIONS with the reason).
 # Changes are made in the generator, not in this file; see CONTRIBUTING.md.
 """Spec-derived layer of the Python SDK. See vaifstudio.client.VaifClient.operations."""
 

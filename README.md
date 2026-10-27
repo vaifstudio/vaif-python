@@ -464,7 +464,7 @@ async with vaif.realtime.subscribe("todos", event="INSERT") as subscription:
 ## Other API operations
 
 `vaif.operations` has one coroutine for every API operation with a typed success
-response, except the operations VAIF's own staff tools use: 801 in this version.
+response, except the staff-only operations: 775 in this version.
 The coroutines are generated from the API's OpenAPI description and named after
 their method and path:
 
@@ -486,10 +486,13 @@ its `httpx.Response` after the stream has ended, with the whole body read. Calls
 use the client's transport, so they carry the API key and the session, follow the
 retry policy and raise the same errors.
 
-`vaifstudio._generated.UNGENERATED_OPERATIONS` lists the other 142 operations
-as `(method, path, reason)`: those without a typed success response, and the 108
-operations VAIF's own staff tools use (`/admin/*` and `/auth/impersonate/*`),
-listed with the reason `platform staff only`.
+`vaifstudio._generated.UNGENERATED_OPERATIONS` lists the other 168 operations
+as `(method, path, reason)`: those without a typed success response, and the 134
+staff-only operations, listed with the reason `platform staff only`. The API
+answers the staff-only operations only for VAIF platform staff: every operation
+under `/admin/*` and `/auth/impersonate/*`, and those outside them: feature flags
+(`/flags`), enterprise contract and invoice writes, Verament usage statistics
+(`GET /ai/copilot/stats`) and documentation edits under `/docs`.
 
 Console routes, such as API keys, logs and project creation, need a VAIF Studio
 access token. Pass it in the client's `headers` as `Authorization: Bearer <token>`.

@@ -113,13 +113,17 @@ Studio API does not serve and should not be used.
   code `NOT_SIGNED_IN` instead of opening or authenticating the socket as the
   other session.
 - `vaif.operations`: one coroutine for every API operation with a typed success
-  response, except the operations VAIF's own staff tools use (801 coroutines),
-  generated from the API's OpenAPI description. `UNGENERATED_OPERATIONS` lists
-  the other 142 with the reason; the 108 staff operations (`/admin/*` and
-  `/auth/impersonate/*`) are listed as `platform staff only`. A binary read that
-  the API redirects to a signed link, such as `get_storage_download()`, returns
-  the link's bytes, read without the API key or the session token and only over
-  `https`.
+  response, except the staff-only operations (775 coroutines), generated from
+  the API's OpenAPI description. `UNGENERATED_OPERATIONS` lists the other 168
+  with the reason; the 134 staff-only operations are listed as
+  `platform staff only`. A binary read that the API redirects to a signed link,
+  such as `get_storage_download()`, returns the link's bytes, read without the
+  API key or the session token and only over `https`.
+- Staff-only operations are not generated, including the ones outside
+  `/admin`: every operation under `/admin/*` and `/auth/impersonate/*`, plus
+  feature flags (`/flags`), enterprise contract and invoice writes,
+  `GET /ai/copilot/stats` and documentation edits under `/docs`. The API
+  answers them only for VAIF platform staff.
 - `vaif.copilot(account_token)` for Verament: `chat` (with `tier`, `effort` and
   `auto_confirm_max_credits`), `confirm_plan` (with `credit_choice` and `docs`),
   `queue_confirm_plan`, `get_job`, `cancel_plan`, `replan`, `plan_with_defaults`

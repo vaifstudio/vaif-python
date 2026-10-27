@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import errno
 import json
 import time
 from unittest.mock import patch
@@ -107,7 +108,7 @@ def _refused_handshake() -> Exception:
     "failure,error_type,status,message",
     [
         (
-            ConnectionRefusedError(61, "Connect call failed"),
+            ConnectionRefusedError(errno.ECONNREFUSED, "Connect call failed"),
             VaifNetworkError,
             None,
             "Could not open the realtime connection: ConnectionRefusedError",
@@ -492,7 +493,7 @@ async def test_a_socket_error_while_reading_raises_a_network_error(client: VaifC
     class BrokenReader(FakeSocket):
         async def recv(self) -> str:
             if self.frames.empty():
-                raise OSError(54, "Connection reset by peer")
+                raise ConnectionResetError(errno.ECONNRESET, "Connection reset by peer")
             return await self.frames.get()
 
     socket = BrokenReader([{"type": "welcome"}, {"type": "subscribed", "channel": "table:todos"}])

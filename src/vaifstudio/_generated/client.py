@@ -1,5 +1,5 @@
 # GENERATED FILE — do not edit by hand.
-# Source: the VAIF Studio API's OpenAPI description, sha256:615e77b7a0789543; 801 operations generated, 142 not generated (listed in UNGENERATED_OPERATIONS with the reason).
+# Source: the VAIF Studio API's OpenAPI description, sha256:615e77b7a0789543; 775 operations generated, 168 not generated (listed in UNGENERATED_OPERATIONS with the reason).
 # Changes are made in the generator, not in this file; see CONTRIBUTING.md.
 """One coroutine per operation, generated from the VAIF Studio API's OpenAPI description."""
 
@@ -186,111 +186,6 @@ class Operations(OperationsBase):
             OPERATIONS["delete_database_wrappers_project_by_project_id_by_wrapper_id"],
             path=path,
             query=query,
-            body=None,
-            headers=headers,
-        )
-
-    async def delete_docs_api_endpoints_by_id(
-        self,
-        *,
-        path: Mapping[str, Any],
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """DELETE /docs/api-endpoints/{id}"""
-        return await self._call(
-            OPERATIONS["delete_docs_api_endpoints_by_id"],
-            path=path,
-            query=None,
-            body=None,
-            headers=headers,
-        )
-
-    async def delete_docs_changelog_by_id(
-        self,
-        *,
-        path: Mapping[str, Any],
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """DELETE /docs/changelog/{id}"""
-        return await self._call(
-            OPERATIONS["delete_docs_changelog_by_id"],
-            path=path,
-            query=None,
-            body=None,
-            headers=headers,
-        )
-
-    async def delete_docs_examples_by_id(
-        self,
-        *,
-        path: Mapping[str, Any],
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """DELETE /docs/examples/{id}"""
-        return await self._call(
-            OPERATIONS["delete_docs_examples_by_id"],
-            path=path,
-            query=None,
-            body=None,
-            headers=headers,
-        )
-
-    async def delete_docs_sdk_examples_by_id(
-        self,
-        *,
-        path: Mapping[str, Any],
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """DELETE /docs/sdk-examples/{id}"""
-        return await self._call(
-            OPERATIONS["delete_docs_sdk_examples_by_id"],
-            path=path,
-            query=None,
-            body=None,
-            headers=headers,
-        )
-
-    async def delete_docs_sdks_by_id(
-        self,
-        *,
-        path: Mapping[str, Any],
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """DELETE /docs/sdks/{id}"""
-        return await self._call(
-            OPERATIONS["delete_docs_sdks_by_id"],
-            path=path,
-            query=None,
-            body=None,
-            headers=headers,
-        )
-
-    async def delete_docs_v2_pages_by_id(
-        self,
-        *,
-        path: Mapping[str, Any],
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """DELETE /docs/v2/pages/{id}"""
-        return await self._call(
-            OPERATIONS["delete_docs_v2_pages_by_id"],
-            path=path,
-            query=None,
-            body=None,
-            headers=headers,
-        )
-
-    async def delete_flags_by_key(
-        self,
-        *,
-        path: Mapping[str, Any],
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """DELETE /flags/{key}"""
-        return await self._call(
-            OPERATIONS["delete_flags_by_key"],
-            path=path,
-            query=None,
             body=None,
             headers=headers,
         )
@@ -1316,20 +1211,6 @@ class Operations(OperationsBase):
         return await self._call(
             OPERATIONS["get_ai_copilot_sessions_by_project_id"],
             path=path,
-            query=None,
-            body=None,
-            headers=headers,
-        )
-
-    async def get_ai_copilot_stats(
-        self,
-        *,
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """GET /ai/copilot/stats"""
-        return await self._call(
-            OPERATIONS["get_ai_copilot_stats"],
-            path=None,
             query=None,
             body=None,
             headers=headers,
@@ -2854,20 +2735,6 @@ class Operations(OperationsBase):
         return await self._call(
             OPERATIONS["get_entitlements_org_by_org_id"],
             path=path,
-            query=None,
-            body=None,
-            headers=headers,
-        )
-
-    async def get_flags(
-        self,
-        *,
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """GET /flags"""
-        return await self._call(
-            OPERATIONS["get_flags"],
-            path=None,
             query=None,
             body=None,
             headers=headers,
@@ -6132,86 +5999,6 @@ class Operations(OperationsBase):
             headers=headers,
         )
 
-    async def patch_docs_api_endpoints_by_id(
-        self,
-        *,
-        path: Mapping[str, Any],
-        body: Any,
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """PATCH /docs/api-endpoints/{id}"""
-        return await self._call(
-            OPERATIONS["patch_docs_api_endpoints_by_id"],
-            path=path,
-            query=None,
-            body=body,
-            headers=headers,
-        )
-
-    async def patch_docs_changelog_by_id(
-        self,
-        *,
-        path: Mapping[str, Any],
-        body: Any,
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """PATCH /docs/changelog/{id}"""
-        return await self._call(
-            OPERATIONS["patch_docs_changelog_by_id"],
-            path=path,
-            query=None,
-            body=body,
-            headers=headers,
-        )
-
-    async def patch_docs_examples_by_id(
-        self,
-        *,
-        path: Mapping[str, Any],
-        body: Any,
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """PATCH /docs/examples/{id}"""
-        return await self._call(
-            OPERATIONS["patch_docs_examples_by_id"],
-            path=path,
-            query=None,
-            body=body,
-            headers=headers,
-        )
-
-    async def patch_docs_sdks_by_id(
-        self,
-        *,
-        path: Mapping[str, Any],
-        body: Any,
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """PATCH /docs/sdks/{id}"""
-        return await self._call(
-            OPERATIONS["patch_docs_sdks_by_id"],
-            path=path,
-            query=None,
-            body=body,
-            headers=headers,
-        )
-
-    async def patch_docs_v2_pages_by_id(
-        self,
-        *,
-        path: Mapping[str, Any],
-        body: Any,
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """PATCH /docs/v2/pages/{id}"""
-        return await self._call(
-            OPERATIONS["patch_docs_v2_pages_by_id"],
-            path=path,
-            query=None,
-            body=body,
-            headers=headers,
-        )
-
     async def patch_enterprise_org_by_org_id_onboarding(
         self,
         *,
@@ -8472,51 +8259,6 @@ class Operations(OperationsBase):
             headers=headers,
         )
 
-    async def post_docs_api_endpoints(
-        self,
-        *,
-        body: Any,
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """POST /docs/api-endpoints"""
-        return await self._call(
-            OPERATIONS["post_docs_api_endpoints"],
-            path=None,
-            query=None,
-            body=body,
-            headers=headers,
-        )
-
-    async def post_docs_changelog(
-        self,
-        *,
-        body: Any,
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """POST /docs/changelog"""
-        return await self._call(
-            OPERATIONS["post_docs_changelog"],
-            path=None,
-            query=None,
-            body=body,
-            headers=headers,
-        )
-
-    async def post_docs_examples(
-        self,
-        *,
-        body: Any,
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """POST /docs/examples"""
-        return await self._call(
-            OPERATIONS["post_docs_examples"],
-            path=None,
-            query=None,
-            body=body,
-            headers=headers,
-        )
-
     async def post_docs_feedback(
         self,
         *,
@@ -8526,36 +8268,6 @@ class Operations(OperationsBase):
         """POST /docs/feedback"""
         return await self._call(
             OPERATIONS["post_docs_feedback"],
-            path=None,
-            query=None,
-            body=body,
-            headers=headers,
-        )
-
-    async def post_docs_sdk_examples(
-        self,
-        *,
-        body: Any,
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """POST /docs/sdk-examples"""
-        return await self._call(
-            OPERATIONS["post_docs_sdk_examples"],
-            path=None,
-            query=None,
-            body=body,
-            headers=headers,
-        )
-
-    async def post_docs_sdks(
-        self,
-        *,
-        body: Any,
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """POST /docs/sdks"""
-        return await self._call(
-            OPERATIONS["post_docs_sdks"],
             path=None,
             query=None,
             body=body,
@@ -8577,52 +8289,6 @@ class Operations(OperationsBase):
             headers=headers,
         )
 
-    async def post_docs_v2_pages(
-        self,
-        *,
-        body: Any,
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """POST /docs/v2/pages"""
-        return await self._call(
-            OPERATIONS["post_docs_v2_pages"],
-            path=None,
-            query=None,
-            body=body,
-            headers=headers,
-        )
-
-    async def post_enterprise_contracts(
-        self,
-        *,
-        body: Any,
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """POST /enterprise/contracts"""
-        return await self._call(
-            OPERATIONS["post_enterprise_contracts"],
-            path=None,
-            query=None,
-            body=body,
-            headers=headers,
-        )
-
-    async def post_enterprise_contracts_by_contract_id_invoice(
-        self,
-        *,
-        path: Mapping[str, Any],
-        body: Any,
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """POST /enterprise/contracts/{contractId}/invoice"""
-        return await self._call(
-            OPERATIONS["post_enterprise_contracts_by_contract_id_invoice"],
-            path=path,
-            query=None,
-            body=body,
-            headers=headers,
-        )
-
     async def post_enterprise_inquire(
         self,
         *,
@@ -8635,37 +8301,6 @@ class Operations(OperationsBase):
             path=None,
             query=None,
             body=body,
-            headers=headers,
-        )
-
-    async def post_enterprise_invoices_by_invoice_id_paid(
-        self,
-        *,
-        path: Mapping[str, Any],
-        body: Any,
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """POST /enterprise/invoices/{invoiceId}/paid"""
-        return await self._call(
-            OPERATIONS["post_enterprise_invoices_by_invoice_id_paid"],
-            path=path,
-            query=None,
-            body=body,
-            headers=headers,
-        )
-
-    async def post_enterprise_invoices_by_invoice_id_send(
-        self,
-        *,
-        path: Mapping[str, Any],
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """POST /enterprise/invoices/{invoiceId}/send"""
-        return await self._call(
-            OPERATIONS["post_enterprise_invoices_by_invoice_id_send"],
-            path=path,
-            query=None,
-            body=None,
             headers=headers,
         )
 
@@ -8695,21 +8330,6 @@ class Operations(OperationsBase):
         return await self._call(
             OPERATIONS["post_entitlements_org_by_org_id_check"],
             path=path,
-            query=None,
-            body=body,
-            headers=headers,
-        )
-
-    async def post_flags(
-        self,
-        *,
-        body: Any = None,
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """POST /flags"""
-        return await self._call(
-            OPERATIONS["post_flags"],
-            path=None,
             query=None,
             body=body,
             headers=headers,
@@ -11948,22 +11568,6 @@ class Operations(OperationsBase):
         """PUT /buckets/{bucketId}"""
         return await self._call(
             OPERATIONS["put_buckets_by_bucket_id"],
-            path=path,
-            query=None,
-            body=body,
-            headers=headers,
-        )
-
-    async def put_flags_by_key(
-        self,
-        *,
-        path: Mapping[str, Any],
-        body: Any = None,
-        headers: Optional[Mapping[str, str]] = None,
-    ) -> Any:
-        """PUT /flags/{key}"""
-        return await self._call(
-            OPERATIONS["put_flags_by_key"],
             path=path,
             query=None,
             body=body,

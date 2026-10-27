@@ -58,9 +58,9 @@ def test_every_table_entry_has_a_method_and_vice_versa() -> None:
         if not name.startswith("_")
     }
     assert methods == set(OPERATIONS)
-    # 943 operations in the API's OpenAPI description: 801 generated, 142 not.
-    assert len(OPERATIONS) == 801
-    assert len(UNGENERATED_OPERATIONS) == 142
+    # 943 operations in the API's OpenAPI description: 775 generated, 168 not.
+    assert len(OPERATIONS) == 775
+    assert len(UNGENERATED_OPERATIONS) == 168
     # The skipped routes are listed as (method, path, reason), never silently dropped.
     assert all(len(entry) == 3 and entry[2] for entry in UNGENERATED_OPERATIONS)
     generated_routes = {(op.method, op.path) for op in OPERATIONS.values()}
@@ -227,7 +227,7 @@ def test_the_generated_modules_name_nothing_outside_this_package() -> None:
     folder = Path(inspect.getfile(Operations)).parent
     stamp = re.compile(
         r"# Source: the VAIF Studio API's OpenAPI description, sha256:[0-9a-f]{16}; "
-        r"801 operations generated, 142 not generated \(listed in "
+        r"775 operations generated, 168 not generated \(listed in "
         r"UNGENERATED_OPERATIONS with the reason\)\."
     )
     names = sorted(path.name for path in folder.glob("*.py"))
@@ -251,16 +251,54 @@ def test_the_generated_modules_name_nothing_outside_this_package() -> None:
             assert outside not in comments, (name, outside)
 
 
-_STAFF_ONLY = re.compile(r"^/(?:admin|auth/impersonate)(?:/|$)")
+_STAFF_ONLY_PATH = re.compile(r"^/(?:admin|auth/impersonate)(?:/|$)")
+
+# The platform-staff operations outside /admin and /auth/impersonate. The API
+# answers each only for VAIF platform staff, so the package has no method for them.
+_STAFF_ONLY_OUTSIDE_ADMIN = frozenset(
+    {
+        ("DELETE", "/docs/api-endpoints/{id}"),
+        ("DELETE", "/docs/changelog/{id}"),
+        ("DELETE", "/docs/examples/{id}"),
+        ("DELETE", "/docs/sdk-examples/{id}"),
+        ("DELETE", "/docs/sdks/{id}"),
+        ("DELETE", "/docs/v2/pages/{id}"),
+        ("DELETE", "/flags/{key}"),
+        ("GET", "/ai/copilot/stats"),
+        ("GET", "/flags"),
+        ("PATCH", "/docs/api-endpoints/{id}"),
+        ("PATCH", "/docs/changelog/{id}"),
+        ("PATCH", "/docs/examples/{id}"),
+        ("PATCH", "/docs/sdks/{id}"),
+        ("PATCH", "/docs/v2/pages/{id}"),
+        ("POST", "/docs/api-endpoints"),
+        ("POST", "/docs/changelog"),
+        ("POST", "/docs/examples"),
+        ("POST", "/docs/sdk-examples"),
+        ("POST", "/docs/sdks"),
+        ("POST", "/docs/v2/pages"),
+        ("POST", "/enterprise/contracts"),
+        ("POST", "/enterprise/contracts/{contractId}/invoice"),
+        ("POST", "/enterprise/invoices/{invoiceId}/paid"),
+        ("POST", "/enterprise/invoices/{invoiceId}/send"),
+        ("POST", "/flags"),
+        ("PUT", "/flags/{key}"),
+    }
+)
+
+
+def _is_staff_only(method: str, path: str) -> bool:
+    return bool(_STAFF_ONLY_PATH.match(path)) or (method, path) in _STAFF_ONLY_OUTSIDE_ADMIN
 
 
 def test_no_operation_method_calls_a_platform_staff_route() -> None:
+    assert len(_STAFF_ONLY_OUTSIDE_ADMIN) == 26
     for name, op in OPERATIONS.items():
-        assert not _STAFF_ONLY.match(op.path), (name, op.method, op.path)
+        assert not _is_staff_only(op.method, op.path), (name, op.method, op.path)
     staff = [entry for entry in UNGENERATED_OPERATIONS if entry[2] == "platform staff only"]
-    assert len(staff) == 108
+    assert len(staff) == 134
     for method, path, reason in UNGENERATED_OPERATIONS:
-        assert bool(_STAFF_ONLY.match(path)) == (reason == "platform staff only"), (
+        assert _is_staff_only(method, path) == (reason == "platform staff only"), (
             method,
             path,
             reason,
@@ -278,6 +316,19 @@ def test_no_operation_method_calls_a_platform_staff_route() -> None:
     for module in modules:
         for number, line in enumerate(module.read_text(encoding="utf-8").splitlines(), 1):
             assert not named.search(line) or listed.match(line), (module.name, number, line)
+
+
+def test_the_staff_only_operations_outside_admin_have_no_method() -> None:
+    assert "post_flags" not in OPERATIONS
+    assert "post_enterprise_invoices_by_invoice_id_paid" not in OPERATIONS
+    assert not hasattr(Operations, "post_flags")
+    assert not hasattr(Operations, "post_enterprise_invoices_by_invoice_id_paid")
+    assert ("POST", "/flags", "platform staff only") in UNGENERATED_OPERATIONS
+    assert (
+        "POST",
+        "/enterprise/invoices/{invoiceId}/paid",
+        "platform staff only",
+    ) in UNGENERATED_OPERATIONS
 
 
 def test_the_generated_docstring_states_what_an_event_stream_operation_returns() -> None:
