@@ -1,7 +1,7 @@
 # VAIF Studio Python SDK
 
 <!-- BEGIN GENERATED SDK STATUS: notice:python -->
-> `vaifstudio` 1.0.0 is the version in this repository. The hosted API (`https://api.vaif.studio`) and console are not available yet.
+> `vaifstudio` 1.0.0 is the version in this repository, has not been tagged yet and is not on PyPI yet. The hosted API (`https://api.vaif.studio`) and console are not available yet.
 <!-- END GENERATED SDK STATUS: notice:python -->
 
 `vaifstudio` is the official async Python client for the [VAIF Studio](https://vaif.studio)
