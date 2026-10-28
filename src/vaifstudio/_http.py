@@ -66,7 +66,9 @@ def normalize_base_url(base_url: str) -> str:
     if parts.scheme not in ("http", "https") or not parts.hostname:
         raise ValueError("base_url must be an absolute http(s) URL")
     if parts.scheme == "http" and parts.hostname not in LOOPBACK_HOSTS:
-        raise ValueError("base_url must use https (http is only allowed for localhost)")
+        raise ValueError(
+            "base_url must use https (http is accepted only for localhost, 127.0.0.1 and ::1)"
+        )
     return base_url.rstrip("/")
 
 

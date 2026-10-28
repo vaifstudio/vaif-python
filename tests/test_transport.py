@@ -32,6 +32,33 @@ def test_allows_http_for_localhost_and_strips_slash() -> None:
     assert c.base_url == "http://localhost:3000"
 
 
+# Plain http would send the project key and bearer token in cleartext.
+@pytest.mark.parametrize(
+    ("base_url", "normalized"),
+    [
+        ("https://api.example.com/", "https://api.example.com"),
+        ("HTTPS://api.example.com", "HTTPS://api.example.com"),
+        ("http://localhost:3000", "http://localhost:3000"),
+        ("http://127.0.0.1:3000", "http://127.0.0.1:3000"),
+        ("http://[::1]:3000", "http://[::1]:3000"),
+    ],
+)
+def test_base_url_accepts_https_and_loopback_http(base_url: str, normalized: str) -> None:
+    assert VaifClient(PROJECT, KEY, base_url=base_url).base_url == normalized
+
+
+@pytest.mark.parametrize(
+    "base_url",
+    ["http://api.example.com", "HTTP://api.example.com", "http://localhost.example.com"],
+)
+def test_base_url_refuses_http_for_other_hosts(base_url: str) -> None:
+    with pytest.raises(ValueError) as caught:
+        VaifClient(PROJECT, KEY, base_url=base_url)
+    assert str(caught.value) == (
+        "base_url must use https (http is accepted only for localhost, 127.0.0.1 and ::1)"
+    )
+
+
 def test_requires_project_and_key() -> None:
     with pytest.raises(ValueError):
         VaifClient("", KEY)

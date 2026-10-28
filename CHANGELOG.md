@@ -26,9 +26,10 @@ Studio API does not serve and should not be used.
 ### Added
 
 - `VaifClient` and `create_client()`: an async client for one project. The
-  project API key is sent as `x-vaif-key`. Options: `base_url` (HTTPS required,
-  except for loopback hosts), `timeout`, `retry`, `headers`, `http_client` and
-  `session`. No cookie jar keeps an end user's refresh token, including that of
+  project API key is sent as `x-vaif-key`. Options: `base_url` (HTTPS required;
+  HTTP is accepted only for `localhost`, `127.0.0.1` and `::1`, and any other
+  HTTP base URL raises `ValueError`), `timeout`, `retry`, `headers`,
+  `http_client` and `session`. No cookie jar keeps an end user's refresh token, including that of
   an `http_client` you pass in.
 - Redirects from the API are not followed, even on an `http_client` created
   with `follow_redirects=True`; they raise `VaifError` with code
